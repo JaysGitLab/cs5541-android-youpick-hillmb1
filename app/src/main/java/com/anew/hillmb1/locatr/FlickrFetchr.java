@@ -101,13 +101,7 @@ public class FlickrFetchr {
         return uriBuilder.build().toString();
     }
 
-    private String buildUrl(Location location) {
-        return ENDPOINT.buildUpon()
-                .appendQueryParameter("method", SEARCH_METHOD)
-                .appendQueryParameter("lat", "" + location.getLatitude())
-                .appendQueryParameter("lon", "" + location.getLongitude())
-                .build().toString();
-    }
+
 
     private void parseItems(List<GalleryItem> items, JSONObject jsonBody)
             throws IOException, JSONException {
@@ -129,6 +123,15 @@ public class FlickrFetchr {
             item.setUrl(photoJsonObject.getString("url_s"));
             items.add(item);
         }
+    }
+
+    private String buildUrl(Location location)
+    {
+        return ENDPOINT.buildUpon()
+                .appendQueryParameter("method", SEARCH_METHOD)
+                .appendQueryParameter("lat", "" + location.getLatitude())
+                .appendQueryParameter("lon", "" + location.getLongitude())
+                .build().toString();
     }
 
 }
