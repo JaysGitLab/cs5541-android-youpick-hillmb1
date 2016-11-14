@@ -28,7 +28,7 @@ public class FlickrFetchr {
             .appendQueryParameter("api_key", API_KEY)
             .appendQueryParameter("format", "json")
             .appendQueryParameter("nojsoncallback", "1")
-            .appendQueryParameter("extras", "url_s")
+            .appendQueryParameter("extras", "url_s,geo")
             .build();
 
     public byte[] getUrlBytes(String urlSpec) throws IOException {
@@ -101,7 +101,13 @@ public class FlickrFetchr {
         return uriBuilder.build().toString();
     }
 
-
+    private String buildUrl(Location location) {
+        return ENDPOINT.buildUpon()
+                .appendQueryParameter("method", SEARCH_METHOD)
+                .appendQueryParameter("lat", "" + location.getLatitude())
+                .appendQueryParameter("lon", "" + location.getLongitude())
+                .build().toString();
+    }
 
     private void parseItems(List<GalleryItem> items, JSONObject jsonBody)
             throws IOException, JSONException {
@@ -121,17 +127,11 @@ public class FlickrFetchr {
             }
             
             item.setUrl(photoJsonObject.getString("url_s"));
+            item.setLat(photoJsonObject.getDouble("latitude"));
+            item.setLon(photoJsonObject.getDouble("longitude"));
+
             items.add(item);
         }
-    }
-
-    private String buildUrl(Location location)
-    {
-        return ENDPOINT.buildUpon()
-                .appendQueryParameter("method", SEARCH_METHOD)
-                .appendQueryParameter("lat", "" + location.getLatitude())
-                .appendQueryParameter("lon", "" + location.getLongitude())
-                .build().toString();
     }
 
 }

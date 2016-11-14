@@ -4,6 +4,8 @@ public class GalleryItem {
     private String mCaption;
     private String mId;
     private String mUrl;
+    private double mLat;
+    private double mLon;
 
     public String getUrl() {
         return mUrl;
@@ -27,6 +29,22 @@ public class GalleryItem {
 
     public void setId(String id) {
         mId = id;
+    }
+
+    public double getLat() {
+        return mLat;
+    }
+
+    public void setLat(double lat) {
+        mLat = lat;
+    }
+
+    public double getLon() {
+        return mLon;
+    }
+
+    public void setLon(double lon) {
+        mLon = lon;
     }
 
     @Override
